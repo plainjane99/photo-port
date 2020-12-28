@@ -124,8 +124,8 @@ const PhotoList = ({ category }) => {
         // current photo
         // use the spread operator to add the index: i key value pair to the current photo state
         setCurrentPhoto({...image, index: i});
-        // updates the isModalOpen value to true to render the modal
-        setIsModalOpen(true);
+        // updates the isModalOpen value to false but i don't understand why??????????????????????
+        setIsModalOpen(!isModalOpen);
     }
 
     return (
@@ -133,7 +133,8 @@ const PhotoList = ({ category }) => {
             {/* modal activated here */}
             {/* pass in currentPhoto as a prop to the modal  */}
             {/* only render the modal if the isModalOpen value is true */}
-            {isModalOpen && <Modal currentPhoto={currentPhoto} />}
+            {/* pass toggleModal down as a prop to Modal, allowing us to toggle the state of the modal*/}
+            {isModalOpen && (<Modal currentPhoto={currentPhoto} onClose={toggleModal} />)}
 
             <div className="flex-row">
                 {/* image object represents the element in the photos array

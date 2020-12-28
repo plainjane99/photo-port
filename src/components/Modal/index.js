@@ -1,8 +1,8 @@
 import React from 'react';
 
 // this modal will be activated by clicking a photo through PhotoList
-// destructure props into currentPhoto for use as a parameter
-function Modal({currentPhoto}) {
+// destructure props into onClose and currentPhoto for use as a parameter
+const Modal = ({ onClose, currentPhoto }) => {
 
     // destructure currentPhoto properties into constants to assign their values into the modal
     const {name, category, description, index} = currentPhoto;
@@ -17,7 +17,8 @@ function Modal({currentPhoto}) {
                     alt="current category"
                 />
                 <p>{description}</p>
-                <button type="button">
+                {/* assign onClose to event listener */}
+                <button onClick={onClose} type="button">
                     Close this modal
                 </button>
             </div>
