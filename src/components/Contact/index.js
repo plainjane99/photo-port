@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+// validate email format
+import { validateEmail } from '../../utils/helpers';
+
 function ContactForm() {
 
     // the Hook that'll manage the form data
@@ -11,10 +14,38 @@ function ContactForm() {
     // each property is added to the defaultValue attribute to each of the three form elements that'll handle form data. 
     const { name, email, message } = formState;
 
+    // define the error message that may occur for input validation
+    const [errorMessage, setErrorMessage] = useState('');
+
     // sync the state
     // function that will sync the state of the component formState with the user input
     // onChange event listener will ensure that the handleChange function fires whenever a keystroke is typed into the input field for name
     function handleChange(e) {
+
+        // validate email before syncing the form data with the state, formState
+        // target the email <input> element, i.e. if the input is 'email' then validate it
+        if (e.target.name === 'email') {
+            // validate the value of the email input field by using the validateEmail function
+            // which returns a Boolean: true if valid and false if invalid
+            const isValid = validateEmail(e.target.value);
+            console.log(isValid);
+            // isValid conditional statement
+            if (!isValid) {
+                setErrorMessage('Your email is invalid.');
+            } else {
+                // empty string means no errror
+                setErrorMessage('');
+            }
+        }
+        // handle the message and name form elements.  fields cannot be blank.
+        else {
+            if (!e.target.value.length) {
+                setErrorMessage(`${e.target.name} is required.`);
+            } else {
+                setErrorMessage('');
+            }
+        }
+
         // setFormState function updates the formState value for the name property
         // assign the value taken from the input field in the UI with e.target.value
         // and assign this value to the property formState.name
@@ -23,6 +54,13 @@ function ContactForm() {
         // This attribute value matches the property names of formState (name, email, and message)
         // and allows us to use [ ] to create dynamic property names
         setFormState({ ...formState, [e.target.name]: e.target.value })
+
+        // use this to log the error message
+        // console.log('errorMessage', errorMessage);
+
+        if (!errorMessage) {
+            setFormState({ ...formState, [e.target.name]: e.target.value });
+        }
     }
 
     // console.log goes outside of the handleChange function
@@ -52,20 +90,27 @@ function ContactForm() {
                 'for' attribute in the <label> element needs to be 'htmlFor' */}
                 <div>
                     <label htmlFor="name">Name:</label>
-                    <input type="text" name="name" defaultValue={name} onChange={handleChange} />
+                    <input type="text" name="name" defaultValue={name} onBlur={handleChange} />
                 </div>
 
                 {/* email input */}
                 <div>
                     <label htmlFor="email">Email address:</label>
-                    <input type="email" name="email" defaultValue={email} onChange={handleChange} />
+                    <input type="email" name="email" defaultValue={email} onBlur={handleChange} />
                 </div>
 
                 {/* message text area */}
                 <div>
                     <label htmlFor="message">Message:</label>
-                    <textarea name="message" rows="5" defaultValue={message} onChange={handleChange} />
+                    <textarea name="message" rows="5" defaultValue={message} onBlur={handleChange} />
                 </div>
+
+                {/* render this if there is an error */}
+                {errorMessage && (
+                    <div>
+                        <p className="error-text">{errorMessage}</p>
+                    </div>
+                )}
 
                 {/* add the button*/}
                 <button type="submit">Submit</button>

@@ -6,10 +6,13 @@ import { capitalizeFirstLetter } from "../../utils/helpers";
 // For example, we cannot have another element outside and at the same level as <section>
 function Nav(props) {
 
+    // deconstruct functions from props
     const {
         categories = [],
         setCurrentCategory,
         currentCategory,
+        contactSelected,
+        setContactSelected
     } = props;
 
     // the first argument is the callback function, 
@@ -33,25 +36,33 @@ function Nav(props) {
             </h2>
             <nav>
                 <ul className="flex-row">
-                    <li className="mx-2">
-                        <a data-testid="about" href="#about">
+                    <li>
+                        {/* add click handler to set the value of contactSelected based on the user's selection */}
+                        {/* set Contact Selected to false when 'about' is selected */}
+                        <a data-testid="about" href="#about" onClick={() => setContactSelected(false)}>
                             About me
                         </a>
                     </li>
-                    <li>
-                        <span>Contact</span>
+                    {/* If contactSelected is true, add the CSS class navActive, which will illuminate the background */}
+                    <li className={`mx-2 ${contactSelected && 'navActive'}`}>
+                        {/* add click handler to set the value of contactSelected based on the user's selection */}
+                        {/* set Contact Selected to true when 'contact' is selected */}
+                        <span onClick={() => setContactSelected(true)}>Contact</span>
                     </li>
 
                     {categories.map((category) => (
                         // short-circuit expression
                         // currentCategory.name === category.name will get evaluated, 
                         // and as long as it is true, then the second bit of the short circuit, navActive, will be returned
+                        // chain && operator so that the 'navActive' class value will only be assigned to the current category
                         <li
-                            className={`mx-1 ${currentCategory.name === category.name && 'navActive'}`}
+                            className={`mx-1 ${currentCategory.name === category.name && !contactSelected && 'navActive'}`}
                             key={category.name}>
                             <span
                                 onClick={() => {
-                                    setCurrentCategory(category)
+                                    setCurrentCategory(category);
+                                    // set ContactSelected to false for gallery
+                                    setContactSelected(false);
                                 }}
                             >
                                 {capitalizeFirstLetter(category.name)}

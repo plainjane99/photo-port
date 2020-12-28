@@ -16,6 +16,12 @@ import ContactForm from './components/Contact';
 // use the useState hook here so we can have the option to change the categories at some point in the future
 
 function App() {
+
+  // condition if Contact form renders based on which menu item the user selects from the navigation bar
+  // set the initial value of contactSelected to false to prevent the contact form from showing when a user initially navigates to the homepage
+  // value of true would render the Contact Form
+  const [contactSelected, setContactSelected] = useState(false);
+
   const [categories] = useState([
     {
       name: "commercial",
@@ -44,12 +50,25 @@ function App() {
         categories={categories}
         setCurrentCategory={setCurrentCategory}
         currentCategory={currentCategory}
+        // Pass the getter and setter functions into the Nav component 
+        // to allow this component to modify the state in the App component
+        // which will conditionally render based on the user's selection
+        contactSelected={contactSelected}
+        setContactSelected={setContactSelected}
       ></Nav>
       <main>
         <div>
-          <ContactForm></ContactForm>
-          <Gallery currentCategory={currentCategory}></Gallery>
-          <About></About>
+          {/* if conditional to render gallery vs contact form */}
+          {/* this conditional uses ternary operator, identified with ? and : */}
+          {!contactSelected ? (
+            // the <> and </> are react fragments to allow multiple elements to be grouped together
+            <>
+              <Gallery currentCategory={currentCategory}></Gallery>
+              <About></About>
+            </>
+          ) : (
+              <ContactForm></ContactForm>
+          )}
         </div>
       </main>
     </div>
