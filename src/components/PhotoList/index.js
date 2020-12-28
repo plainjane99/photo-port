@@ -109,14 +109,12 @@ const PhotoList = ({ category }) => {
     // Then map the currentPhotos array to render each photo that matches the category selected by the user
     const currentPhotos = photos.filter((photo) => photo.category === category);
 
-    console.log(require(`../../assets/small/commercial/0.jpg`));
-
     return (
         <div>
             <div className="flex-row">
                 {currentPhotos.map((image, i) => (
                     <img
-                        src={require(`../../assets/small/${category}/${i}.jpg`)}
+                        src={require(`../../assets/small/${category}/${i}.jpg`).default}
                         alt={image.name}
                         className="img-thumbnail mx-1"
                         key={image.name}
