@@ -82,7 +82,7 @@ function ContactForm() {
     // a controlled component allows the data to be validated or manipulated using JavaScript, offering better control over the data
     return (
         <section>
-            <h1>Contact me</h1>
+            <h1 data-testid="h1tag">Contact me</h1>
             {/* add event handler onSubmit at form level to call handleSubmit function */}
             <form id="contact-form" onSubmit={handleSubmit}>
                 {/* name input */}
@@ -113,7 +113,7 @@ function ContactForm() {
                 )}
 
                 {/* add the button*/}
-                <button type="submit">Submit</button>
+                <button data-testid="buttontag" type="submit">Submit</button>
 
             </form>
         </section>

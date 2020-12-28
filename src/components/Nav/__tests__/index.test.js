@@ -6,25 +6,31 @@ import Nav from '..';
 
 // test suite needs to reflect the inclusion of props
 // we create mock functions to use as props for the Nav component to render
+// a test should be added for all props used
 const categories = [
     { name: 'portraits', description: 'Portraits of people in my life' }
 ]
 const mockCurrentCategory = jest.fn();
 const mockSetCurrentCategory = jest.fn();
+const mockContactSelected = jest.fn();
+const mockSetContactSelected = jest.fn();
 
 // configure the test environment
 afterEach(cleanup);
 
 // declare the component we're testing
 // test if component renders
-describe('About component', () => {
+describe('Nav component', () => {
     // baseline test
     it('renders', () => {
         render(<Nav
             // use mock functions as props for the Nav component to render
             categories={categories}
             setCurrentCategory={mockSetCurrentCategory}
-            currentCategory={mockCurrentCategory} />);
+            currentCategory={mockCurrentCategory}
+            contactSelected={mockContactSelected}
+            setContactSelected={mockSetContactSelected}
+            />);
     });
 
     // snapshot test
@@ -33,7 +39,10 @@ describe('About component', () => {
             // use mock functions as props for the Nav component to render
             categories={categories}
             setCurrentCategory={mockSetCurrentCategory}
-            currentCategory={mockCurrentCategory} />);
+            currentCategory={mockCurrentCategory}
+            contactSelected={mockContactSelected}
+            setContactSelected={mockSetContactSelected}
+            />);
         // assert value comparison
         expect(asFragment()).toMatchSnapshot();
     });
@@ -49,7 +58,10 @@ describe('emoji is visible', () => {
             // use mock functions as props for the Nav component to render
             categories={categories}
             setCurrentCategory={mockSetCurrentCategory}
-            currentCategory={mockCurrentCategory} />);
+            currentCategory={mockCurrentCategory}
+            contactSelected={mockContactSelected}
+            setContactSelected={mockSetContactSelected}
+            />);
         // Assert
         // test the emoji's accessibility features by querying the element by its aria-label of 'camera'
         // we have used a custom matcher to compare the expected value to the one received by our query
@@ -66,7 +78,10 @@ describe('links are visible', () => {
             // use mock functions as props for the Nav component to render
             categories={categories}
             setCurrentCategory={mockSetCurrentCategory}
-            currentCategory={mockCurrentCategory} />);
+            currentCategory={mockCurrentCategory}
+            contactSelected={mockContactSelected}
+            setContactSelected={mockSetContactSelected}
+            />);
         // Assert
         expect(getByTestId('link')).toHaveTextContent('Oh Snap!');
         expect(getByTestId('about')).toHaveTextContent('About me');
