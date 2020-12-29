@@ -1,7 +1,7 @@
 {
   "name": "photo-port",
   "version": "0.1.0",
-  "homepage": "https://plainjane99.github.io/photo-port/",
+  "homepage": "https://plainjane99.github.io/photo-port",
   "private": true,
   "dependencies": {
     "@testing-library/user-event": "^12.6.0",
