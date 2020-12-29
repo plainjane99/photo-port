@@ -140,6 +140,7 @@ const PhotoList = ({ category }) => {
                 {/* image object represents the element in the photos array
                 'i' is the index in the path file structure where we pull/section the image */}
                 {currentPhotos.map((image, i) => (
+
                     <img
                         src={require(`../../assets/small/${category}/${i}.jpg`).default}
                         alt={image.name}
